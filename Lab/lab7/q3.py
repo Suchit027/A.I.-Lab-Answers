@@ -59,6 +59,7 @@ class Heap:
     def heappop(self):
         ans = self.array[1]
         temp = self.array[self.heapsize]
+        self.heapsize -= 1
         parent, child = 1, 2
         while child <= self.heapsize:
             if child < self.heapsize and self.array[child][0] > self.array[child + 1][0]:
@@ -99,7 +100,9 @@ def a_star(src, goal):
         curr = queue.heappop()
         if curr[1].matrix == goal:
             for i in curr[2]:
-                print(i)
+                for j in i:
+                    print(j)
+                print()
             return
         if curr[1].matrix not in visit:
             visit.append(curr[1].matrix)
@@ -107,8 +110,9 @@ def a_star(src, goal):
         for x in adList:
             if x.matrix not in visit and x.matrix not in frontier:
                 path = [i for i in curr[2]]
+                g = len(path)
                 path.append(x.matrix)
-                queue.heappush([x.h, x, path])
+                queue.heappush([x.h + g, x, path])
                 frontier.append(x.matrix)
             elif x.matrix in frontier:
                 for i in range(1, queue.heapsize + 1):
@@ -118,8 +122,9 @@ def a_star(src, goal):
                             queue.heapsize -= 1
                             queue.heapify()
                             path = [i for i in curr[2]]
+                            g = len(path)
                             path.append(x.matrix)
-                            queue.heappush([x.h, x, path])
+                            queue.heappush([x.h + g, x, path])
         del curr
         del adList
 
