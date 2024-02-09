@@ -1,4 +1,4 @@
-def cryptic(values, stored, visit):
+def cryptic(values, stored):
     if -1 not in stored.values():
         summing = []
         for val in values:
@@ -13,18 +13,14 @@ def cryptic(values, stored, visit):
         else:
             return
     for i in range(0, 10):
-        if i in visit:
-            continue
-        visit.append(i)
         keys = sorted(stored.keys())
         x = ''
         for x in keys:
             if stored[x] == -1:
                 stored[x] = i
                 break
-        cryptic(values, stored, visit)
+        cryptic(values, stored)
         stored[x] = -1
-        visit.remove(i)
     return
 
 
@@ -37,4 +33,4 @@ if __name__ == '__main__':
     keys = ''.join(test)
     keys = set(keys)
     keys = {x: -1 for x in keys}
-    cryptic(test, keys, [])
+    cryptic(test, keys)
